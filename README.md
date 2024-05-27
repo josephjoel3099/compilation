@@ -9,9 +9,51 @@
   <node pkg="tf" type="static_transform_publisher" name="l515_depth_link_link"
         args="0 0 0 0 0 0 /base_link /l515_optical_link_link 100"/>
 ```
-#### ROS Key on RPi Fix
+#### Launch file
 ```
-wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find your_package_name)/worlds/your_world.world"/>
+  </include>
+
+  <param name="robot_description" command="$(find xacro)/xacro $(find your_package_name)/urdf/robot.urdf" />
+
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen" args="-param robot_description -urdf -model my_robot -z 1"/>
+</launch>
+
+```
+#### Unit test
+```
+
+    mkdir ~/catkin_ws/src -p
+    cd ~/catkin_ws/src
+    catkin_create_pkg tutorial rospy
+    cd tutorial/
+    mkdir test
+    cd test/
+    touch test_code.py
+    chmod +x test_code.py
+    ls
+
+The content of our test_code.py file is:
+
+#! /usr/bin/env python
+
+import unittest
+import rostest 
+
+
+class MyTestCase(unittest.TestCase):
+    
+    def test_whatever(self):
+        pass
+    
+
+if _name_ == "__main__":
+    rostest.rosrun('tutorial', 'test_code', MyTestCase)
+
+The first way of executing it is by calling it directly:
+    ./test_code.py
 ```
 
 ### 2. Links
@@ -34,6 +76,10 @@ https://www.electronicshub.org/setup-wifi-raspberry-pi-2-using-usb-dongle/
 #### Ubuntu 18.04 desktop on RPi
 ```
 https://maker.pro/raspberry-pi/projects/install-ubuntu-18044-lts-on-your-raspberry-pi-board
+```
+#### ROS Key on RPi Fix
+```
+wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
 ```
 
 ### 3. Repos
