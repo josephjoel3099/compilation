@@ -3,11 +3,8 @@
 ### 1. Code
 #### Static TF
 ```
-<node pkg="tf" type="static_transform_publisher" name="l515_depth_link" 
-        args="0.085 0 0.775 0 0 0 /base_link /l515_optical_link_depth_frame 100"/>
-
-  <node pkg="tf" type="static_transform_publisher" name="l515_depth_link_link"
-        args="0 0 0 0 0 0 /base_link /l515_optical_link_link 100"/>
+<node pkg="tf" type="static_transform_publisher" name="<link_name>" 
+        args="0.085 0 0.775 0 0 0 /<fram1> /<frame2> 100"/>
 ```
 #### Launch file
 ```
